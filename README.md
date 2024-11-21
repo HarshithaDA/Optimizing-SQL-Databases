@@ -20,6 +20,7 @@ Software needed:
 3. Install Python 
 4. Install the mysql-connector and pandas library to connect to the database
 5. An IDE to run the script (ex. VS Code)
+6. Download the dataset using the mentioned link
 
 MY SQL Workbench setup:
 1. Once you install workbench, move it to the applications folder on your system

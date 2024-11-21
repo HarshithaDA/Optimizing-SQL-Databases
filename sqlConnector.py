@@ -12,6 +12,9 @@ dbConnect = mysql.connector.connect(
     allow_local_infile=True  # set local_infile to true to be able to read from file
 )
 
+# Fetch cursor to be able to execute queries
+exec = dbConnect.cursor()
+
 # Path of hospitals table dataset on your system
 hospitalsDatasetFilePath = "YOUR_HOSPITALS.CSV_FILEPATH"
 
@@ -105,9 +108,6 @@ def loadHospitalPricesData():
         exec.execute(loadPricesToTempFileQuery)
         os.remove(filePathLoadPrices)
 
-# Fetch cursor to be able to execute queries
-exec = dbConnect.cursor()
-
 createTables()
 loadHospitalsData()
 loadHospitalPricesData()
@@ -120,7 +120,7 @@ print("Total rows in hospitals table: ", exec.fetchone()[0])
 exec.execute("SELECT COUNT(*) FROM PRICES;")
 print("Total rows in prices table: ", exec.fetchone()[0])
                  
-# Close the curesor and the SQL connector
+# Close the cursor and the SQL connector
 exec.close()
 dbConnect.close()
 
