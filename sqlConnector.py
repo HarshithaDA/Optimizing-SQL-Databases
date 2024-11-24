@@ -4,16 +4,15 @@ import pandas as pd
 import os
 
 # Connect to SQL Workbench by providing the host/username/password (will be different depending on your steup)
-dbConnect = mysql.connector.connect(
-    host="YOUR_HOST",  # Provide host from workbench
-    user="YOUR_ROOT",       # Provide the name of user you created while setting up workbench        
-    password="YOUR_PASSWORD", # Provide the password you created while setting up workbench        
-    database="YOUR_DATABASE_NAME",  # Provide the name of the database you created using workbench UI
-    allow_local_infile=True  # set local_infile to true to be able to read from file
-)
-
-# Fetch cursor to be able to execute queries
-exec = dbConnect.cursor()
+def connectToDB():
+    dbConnect = mysql.connector.connect(
+        host="localhost",  # Provide host from workbench
+        user="root",       # Provide the name of user you created while setting up workbench        
+        password="Database1234$", # Provide the password you created while setting up workbench        
+        database="MY_DATASET",  # Provide the name of the database you created using workbench UI
+        allow_local_infile=True  # set local_infile to true to be able to read from file
+    )
+    return dbConnect
 
 # Path of hospitals table dataset on your system
 hospitalsDatasetFilePath = "YOUR_HOSPITALS.CSV_FILEPATH"
@@ -108,9 +107,14 @@ def loadHospitalPricesData():
         exec.execute(loadPricesToTempFileQuery)
         os.remove(filePathLoadPrices)
 
-createTables()
-loadHospitalsData()
-loadHospitalPricesData()
+dbConnect = connectToDB()
+
+# Fetch cursor to be able to execute queries
+exec = dbConnect.cursor()
+
+# createTables()
+# loadHospitalsData()
+# loadHospitalPricesData()
 
 # Query to verify if the data was loaded properly in hospitals table (Please comment out after initial run)
 exec.execute("SELECT COUNT(*) FROM HOSPITALS;")
