@@ -11,7 +11,7 @@ bTreeIndexHospitalsQuery = f"""
 """
 
 #def createBTreeIndex():
-#    exec.execute(bTreeIndexHospitalsQuery)
+#   exec.execute(bTreeIndexHospitalsQuery)
 #   exec.execute(btreeIndexPricesQuery)
 
 def fetchExecTime(query):
@@ -31,7 +31,7 @@ exec = dbConnect.cursor()
 for query in queries:
      executionTime = fetchExecTime(query)
      print(f"Exceution time for query {queryNum} is {executionTime}")
-     queryNum += 2
+     queryNum += 1
 
 exec.close()
 dbConnect.close()
