@@ -2,6 +2,7 @@
 import mysql.connector
 import pandas as pd
 import os
+from queries import pricesTableName, hospitalsTableName 
 
 # Connect to SQL Workbench by providing the host/username/password (will be different depending on your steup)
 def connectToDB():
@@ -27,8 +28,8 @@ filePathLoadPrices = "/tmp/prices.csv"
 limitedRows = 100000
 
 # Create HOSPITALS Table to store the data in hospitals.csv
-createHospitalsTableQuery = """
-CREATE TABLE IF NOT EXISTS HOSPITALS (
+createHospitalsTableQuery = f"""
+CREATE TABLE IF NOT EXISTS {hospitalsTableName} (
 cms_certification_num CHAR(6) NOT NULL,
 name VARCHAR(256),
 address VARCHAR(256),
@@ -45,8 +46,8 @@ PRIMARY KEY (cms_certification_num)
 """
 
 # Create PRICES Table to store the data in hospitals_prices.csv (Imported from kaggle dataset)
-createHospitalPricesTableQuery  = """
-CREATE TABLE IF NOT EXISTS PRICES (
+createHospitalPricesTableQuery  = f"""
+CREATE TABLE IF NOT EXISTS {pricesTableName} (
 cms_certification_num CHAR(6),
 payer VARCHAR(256),
 code VARCHAR(128) DEFAULT 'NONE',
