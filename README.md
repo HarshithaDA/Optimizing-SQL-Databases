@@ -38,7 +38,7 @@ CHANGES to be made in sqlConnector.py
 1. Update host, user, password and database in dbConnect - (get these details from workbench)
 2. Update the hospitalsDatasetFilePath variable depending on the location of hospitals.csv on your system
 3. Update the hospitalPricesDatasetFilePath variable depending on the location of hospital_prices.csv on your system
-4. Save the changes and run the script
+4. Save the changes and run the scripts - indexing.py, sharding.py, partitioning.py, caching.py
 
 
 

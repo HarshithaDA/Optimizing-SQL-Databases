@@ -113,9 +113,10 @@ dbConnect = connectToDB()
 # Fetch cursor to be able to execute queries
 exec = dbConnect.cursor()
 
-# createTables()
-# loadHospitalsData()
-# loadHospitalPricesData()
+# Functions to create tables and load data, comment out after initial run
+createTables()
+loadHospitalsData()
+loadHospitalPricesData()
 
 # Query to verify if the data was loaded properly in hospitals table (Please comment out after initial run)
 exec.execute("SELECT COUNT(*) FROM HOSPITALS;")
