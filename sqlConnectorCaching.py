@@ -77,6 +77,7 @@ PRIMARY KEY (cms_certification_num(6), code(6), inpatient_outpatient, internal_r
 createCacheTables = f"""
 CREATE TABLE IF NOT EXISTS query_cache (
     query TEXT NOT NULL,
+    result JSON,
     execution_time FLOAT,
     last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (query(255)) -- Specify a key length for the primary key
