@@ -1,5 +1,5 @@
 import time
-from sqlConnector import connectToDB
+from sqlConnectorCaching import connectToDB
 from queries import queries
 
 # Query to check if a query exists in the cache
