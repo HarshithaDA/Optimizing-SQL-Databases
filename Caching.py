@@ -1,65 +1,55 @@
 import time
-from sqlConnectorCaching import connectToDB
+import json
+from sqlConnector import connectToDB
 from queries import queries
 
-# Query to check if a query exists in the cache
-checkCacheQuery = f"""
-SELECT execution_time FROM query_cache WHERE query = %s;
-"""
-
-# Query to insert a query and its execution time into the cache
-insertCacheQuery = f"""
-INSERT INTO query_cache (query, execution_time) VALUES (%s, %s)
-ON DUPLICATE KEY UPDATE execution_time = VALUES(execution_time), last_updated = CURRENT_TIMESTAMP;
-"""
-
-def fetchFromCache(query):
-    # Check if the query is in the cache
-    checkCacheQuery = f"SELECT execution_time FROM query_cache WHERE query = %s"
+def get_query(query):
     
-    # Start timer for cache lookup
-    cacheStartTime = time.time()
-    exec.execute(checkCacheQuery, (query,))
-    cachedResult = exec.fetchone()
-    cacheEndTime = time.time()
+    # We must first check if the query exists in the cache, get time to retrieve from cache
+    start_cache_time = time.time()
+    exec.execute("SELECT result, execution_time FROM query_cache WHERE query = %s", (query,))
+    cached_entry = exec.fetchone()
+    execution_from_cache = time.time() - start_cache_time
 
-    if cachedResult:
-        # Cache hit: Report the time to retrieve the cached result
-        cacheFetchTime = cacheEndTime - cacheStartTime
-        print(f"Cache hit for query: {query}")
-        print(f"Time to retrieve from cache: {cacheFetchTime:.4f} seconds")
-        print(f"Cached execution time: {cachedResult[0]:.4f} seconds")
-        return cacheFetchTime  # Return the time to retrieve from cache
+    if cached_entry:
+        # Cache hit - Set the result and execution time to the calculated values
+        print(f"Query in cache: {query}")
+        result = json.loads(cached_entry[0])
+        execution_time = execution_from_cache
     else:
-        # Cache miss: Execute query and measure its execution time
-        print(f"Cache miss for query: {query}")
-        startTime = time.time()
-        exec.execute(query)
-        exec.fetchall()  # Retrieve all results
-        endTime = time.time()
-        executionTime = endTime - startTime
+        # Cache miss - Execute the query on the database
+        print(f"Query not in cache: {query}")
+        start_time = time.time()
+        exec.execute(query) 
+        result = exec.fetchall()
+        execution_time = time.time() - start_time
 
-        # Store the query and execution time in the cache
-        storeCacheQuery = f"INSERT INTO query_cache (query, execution_time) VALUES (%s, %s)"
-        exec.execute(storeCacheQuery, (query, executionTime))
-        dbConnect.commit()  # Commit the transaction
-        print(f"Query executed in {executionTime:.4f} seconds and cached.")
-        return executionTime  # Return the actual execution time
+        # Store the query, result, and execution time in the cache for future use
+        exec.execute(
+            """
+            INSERT INTO query_cache (query, result, execution_time) 
+            VALUES (%s, %s, %s)
+            """,
+            (query, json.dumps(result), execution_time)  # Convert result to JSON
+        )
+        dbConnect.commit()
 
-def printExecTime():
-    """Prints execution time for each query in the list."""
+    return result, execution_time
+
+def print_exec_time():
+    # Prints execution time for each query in the list.
     queryNum = 1
     for query in queries:
-        executionTime = fetchFromCache(query)
-        print(f"Execution time for query {queryNum} is {executionTime:.4f} seconds")
+        result, execution_time = get_query(query)
+        print(f"Execution time for query {queryNum} is {execution_time:.4f} seconds")
         queryNum += 1
 
 # Connect to the database
 dbConnect = connectToDB()
 exec = dbConnect.cursor()
 
-# Measure and print execution times
-printExecTime()
+# Measure and print the execution times
+print_exec_time()
 
 # Close the connection
 exec.close()
