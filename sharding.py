@@ -76,7 +76,7 @@ def insertIntoShardHosp(batch, table_name, shard_key, shard_connections):
     cursor.execute(query)
     shard_connections.commit()
     cursor.close()
-    # Optionally, remove the temporary file after insertion (to clean up)
+    
     os.remove(temp_file_path)
 
 # Insert data into the correct shard for prices table
