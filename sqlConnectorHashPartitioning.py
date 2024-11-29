@@ -4,17 +4,16 @@ import mysql.connector
 import pandas as pd
 import os
 
-# Connect to SQL Workbench by providing the host/username/password (will be different depending on your steup)
-dbConnect = mysql.connector.connect(
-    host="127.0.0.1",  # Provide host from workbench
-    user="root",       # Provide the name of user you created while setting up workbench        
-    password="Harshidbmsproject24@", # Provide the password you created while setting up workbench        
-    database="mydatabase5",  # Provide the name of the database you created using workbench UI
-    allow_local_infile=True  # set local_infile to true to be able to read from file
-)
-
-# Fetch cursor to be able to execute queries
-exec = dbConnect.cursor()
+# Connect to SQL Workbench by providing the host/username/password (will be different depending on your setup)
+def connectToDB():
+    dbConnect = mysql.connector.connect(
+        host="127.0.0.1",  # Provide host from workbench
+        user="root",       # Provide the name of user you created while setting up workbench        
+        password="Harshidbmsproject24@", # Provide the password you created while setting up workbench        
+        database="mydatabase5",  # Provide the name of the database you created using workbench UI
+        allow_local_infile=True  # set local_infile to true to be able to read from file
+    )
+    return dbConnect
 
 # Path of hospitals table dataset on your system
 hospitalsDatasetFilePath = "C:/Users/Harshitha/Downloads/hospitals.csv"
@@ -128,6 +127,12 @@ def loadHospitalPricesData():
         invalidRowsDF = pd.DataFrame(invalidRows)
         invalidRowsDF.to_csv("invalid_prices.csv", index=False)
         print(f"Invalid rows logged in 'invalid_prices.csv'.")
+
+
+dbConnect = connectToDB()
+
+# Fetch cursor to be able to execute queries
+exec = dbConnect.cursor()
 
 
 # Create tables and load data
