@@ -50,11 +50,11 @@ def allocateShard(shard_key):
     first_digit = shard_key[0]
 
     if first_digit in ("1", "2", "3"):
-        return "shard_7"
+        return "shard_1"
     elif first_digit in ("4", "5", "6"):
-        return "shard_8"
+        return "shard_2"
     elif first_digit in ("7", "8", "9", "0"):
-        return "shard_9"
+        return "shard_3"
     else:
         raise ValueError(f"Unexpected shard_key: {shard_key}.")
         
