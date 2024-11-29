@@ -57,7 +57,7 @@ units VARCHAR(128) DEFAULT 'NONE' ,
 description VARCHAR(2048),
 inpatient_outpatient ENUM('INPATIENT', 'OUTPATIENT', 'BOTH', 'UNSPECIFIED') DEFAULT 'UNSPECIFIED',
 price decimal(10,2) NOT NULL,
-price_partition INT GENERATED ALWAYS AS (price * 100) STORED, -- Add partition column
+price_partition INT GENERATED ALWAYS AS (price * 100) STORED, 
 code_disambiguator VARCHAR(2048) DEFAULT 'NONE',
 CONSTRAINT price_less_than_zero CHECK (price >= 0),
 CONSTRAINT price_greater_than_ten_mil CHECK (price <= 1E+7),
