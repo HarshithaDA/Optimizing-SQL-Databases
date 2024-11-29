@@ -63,7 +63,7 @@ def allocateShard(shard_key):
 def insertIntoShardHosp(batch, table_name, shard_key, shard_connections):
     cursor = shard_connections.cursor()
 
-    temp_file_path = f"C:/Users/keert/OneDrive/Desktop/Masters/Semester 1/Courses/DBMS/Project/Dataset/tmp/hospitals/{shard_key}_hospitals.csv"
+    temp_file_path = f"Dataset/tmp/hospitals/{shard_key}_hospitals.csv"
     batch.to_csv(temp_file_path, index=False, header=False)
     
     query = f"""
@@ -83,7 +83,7 @@ def insertIntoShardHosp(batch, table_name, shard_key, shard_connections):
 def insertIntoShardPrice(file_path, table_name, shard_key, shard_connections):
     cursor = shard_connections.cursor()
 
-    temp_file_path = f"C:/Users/keert/OneDrive/Desktop/Masters/Semester 1/Courses/DBMS/Project/Dataset/tmp/prices/{shard_key}_prices.csv"
+    temp_file_path = f"Dataset/tmp/prices/{shard_key}_prices.csv"
 
     batch = pd.read_csv(file_path)
     batch.to_csv(temp_file_path, index=False, header=False)
