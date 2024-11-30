@@ -1,6 +1,6 @@
 import mysql.connector
 import time
-from queries import queries  # Assuming queries.py is in the same directory
+from queries import queries 
 
 def connectToDB():
     """Establish a connection to the database."""
