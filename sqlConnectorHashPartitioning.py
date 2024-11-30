@@ -11,7 +11,7 @@ def connectToDB():
         user="root",       # Provide the name of user you created while setting up workbench        
         password="Harshidbmsproject24@", # Provide the password you created while setting up workbench        
         database="mydatabase5",  # Provide the name of the database you created using workbench UI
-        allow_local_infile=True  # set local_infile to true to be able to read from file
+        allow_local_infile=True  # set local_infile to true to be able to read from the file
     )
     return dbConnect
 
