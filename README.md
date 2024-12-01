@@ -45,4 +45,16 @@ Steps to run Caching:
 1. First run the sqlConnectorCaching.py to implement the connect to the database and create the cache table as well
 2. Then run the Caching.py to run the queries in queries.py and view execution times
 
+Steps to run Range Partitioning:
+
+1. First run the sqlConnectorRangePartitioning.py to create the tables and implement the partitions for the same.
+2. Next run the rangePartitioning.py file to fetch queries from queries.py and execute them and view each of their execution times.
+
+Steps to run Hash Partitioning:
+
+1. First run the sqlConnectorHashPartitioning.py to create the tables and implement the partitions for the same.
+2. Next run the hashPartitioning.py file to fetch queries from queries.py and execute them and view each of their execution times.
+
+
+
 
