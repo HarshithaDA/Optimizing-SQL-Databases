@@ -3,6 +3,7 @@ import os
 from sharding import createShardConnections, allocateShard, insertIntoShardHosp, insertIntoShardPrice
 from queries import pricesTableName, hospitalsTableName
 import pandas as pd
+from ShardQueries import getHospitalDetails, getTotalBeds, getHospitalPrices
 
 hospitalsDatasetFilePath = "Dataset/hospitals.csv"
 hospitalPricesDatasetFilePath = "Dataset/hospital_prices.csv"
@@ -97,3 +98,15 @@ print("Data loaded successfully into shards for hospitals.")
 
 loadHospitalPricesData()
 print("Data loaded successfully into shards for prices.")
+
+# Query 1: Get hospital details
+hospital_details = getHospitalDetails("10001")
+print("Hospital Details:", hospital_details)
+
+# Query 2: Get total beds across shards
+total_beds = getTotalBeds()
+print("Total Beds:", total_beds)
+
+# Query 3: Get hospital price details
+hospital_prices = getHospitalPrices("231313")
+print("Hospital Prices:", hospital_prices)
