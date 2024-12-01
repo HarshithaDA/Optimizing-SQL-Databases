@@ -1,11 +1,23 @@
+import decimal
 import time
 import json
 from sqlConnector import connectToDB
 from queries import queries
 
+def convert_decimal_to_float(result):
+    if isinstance(result, list):
+        return [convert_decimal_to_float(item) for item in result]
+    elif isinstance(result, tuple):
+        return tuple(convert_decimal_to_float(item) for item in result)
+    elif isinstance(result, dict):
+        return {key: convert_decimal_to_float(value) for key, value in result.items()}
+    elif isinstance(result, decimal.Decimal):
+        return float(result)
+    else:
+        return result
+
 def get_query(query):
-    
-    # We must first check if the query exists in the cache, get time to retrieve from cache
+     # We must first check if the query exists in the cache, get time to retrieve from cache
     start_cache_time = time.time()
     exec.execute("SELECT result, execution_time FROM query_cache WHERE query = %s", (query,))
     cached_entry = exec.fetchone()
@@ -24,25 +36,28 @@ def get_query(query):
         result = exec.fetchall()
         execution_time = time.time() - start_time
 
+        # Convert the Decimal objects to float for JSON serialization
+        result_serializable = convert_decimal_to_float(result)
+
         # Store the query, result, and execution time in the cache for future use
         exec.execute(
             """
             INSERT INTO query_cache (query, result, execution_time) 
             VALUES (%s, %s, %s)
             """,
-            (query, json.dumps(result), execution_time)  # Convert result to JSON
+            (query, json.dumps(result_serializable), execution_time)
         )
         dbConnect.commit()
 
     return result, execution_time
 
 def print_exec_time():
-    # Prints execution time for each query in the list.
-    queryNum = 1
+    # Prints execution time for each query in the list
+    query_num = 1
     for query in queries:
         result, execution_time = get_query(query)
-        print(f"Execution time for query {queryNum} is {execution_time:.4f} seconds")
-        queryNum += 1
+        print(f"Execution time for query {query_num} is {execution_time:.4f} seconds")
+        query_num += 1
 
 # Connect to the database
 dbConnect = connectToDB()
