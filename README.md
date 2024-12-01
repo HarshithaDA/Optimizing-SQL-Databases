@@ -40,6 +40,10 @@ CHANGES to be made in sqlConnector.py
 3. Update the hospitalPricesDatasetFilePath variable depending on the location of hospital_prices.csv on your system
 4. Save the changes and run the scripts - indexing.py, sharding.py, partitioning.py, caching.py
 
+Steps to run Indexing:
+1. First run the sqlConnector.py to connect to the database and create and load the tables
+2. Then run the indexing.py to run the queries in queries.py and view execution times
+   
 Steps to run Caching:
 
 1. First run the sqlConnectorCaching.py to implement the connect to the database and create the cache table as well
