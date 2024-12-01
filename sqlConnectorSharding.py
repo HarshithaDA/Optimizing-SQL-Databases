@@ -108,5 +108,5 @@ total_beds = getTotalBeds()
 print("Total Beds:", total_beds)
 
 # Query 3: Get hospital price details
-hospital_prices = getHospitalPrices("231313")
+hospital_prices = getHospitalPrices("10001")
 print("Hospital Prices:", hospital_prices)
