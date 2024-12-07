@@ -59,8 +59,15 @@ Steps to run Hash Partitioning:
 1. First run the sqlConnectorHashPartitioning.py to create the tables and implement the partitions for the same.
 2. Next run the hashPartitioning.py file to fetch queries from queries.py and execute them and view each of their execution times.
 
+
 Steps to run Sharding:
 1. Create databases: 'hospitals_shard_1', 'hospitals_shard_2', 'hospitals_shard_3'.
 2. Execute 'sqlConnectorSharding.py' to connect to the databases, create tables, to execute the queries and to calculate the execution time.
 
 
+Team Members:
+Manav Kothari
+Keerthi Anand
+Harshitha Devina Anto
+Veronica Chittora
+Siddhi Patil
