@@ -66,8 +66,8 @@ Steps to run Sharding:
 
 
 Team Members:
-Manav Kothari
-Keerthi Anand
-Harshitha Devina Anto
-Veronica Chittora
-Siddhi Patil
+1. Manav Kothari
+2. Keerthi Anand
+3. Harshitha Devina Anto
+4. Veronica Chittora
+5. Siddhi Patil
